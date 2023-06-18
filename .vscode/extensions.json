@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "ms-vscode.vscode-typescript-next",
+    "mgmcdermott.vscode-language-babel",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "ZixuanChen.vitest-explorer",
+    "wix.vscode-import-cost",
+    "shardulm94.trailing-spaces",
+    "bierner.color-info",
+    "naumovs.color-highlight",
+    "GitHub.copilot",
+    "seatonjiang.gitmoji-vscode",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "yoavbls.pretty-ts-errors",
+    "PKief.material-icon-theme"
+  ]
+}

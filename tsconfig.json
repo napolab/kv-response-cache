@@ -1,0 +1,14 @@
+{
+  "extends": ["@tsconfig/recommended/tsconfig.json", "@tsconfig/node18/tsconfig.json", "@tsconfig/esm/tsconfig.json"],
+  "compilerOptions": {
+    "lib": ["esnext"],
+    "types": ["vitest/globals"],
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@adapters/*": ["src/adapters/*"]
+    }
+  },
+  "include": ["src", "types"],
+  "exclude": ["node_modules", "dist"]
+}
