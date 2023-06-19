@@ -1,6 +1,6 @@
 # @napolab/kv-response-cache
 
-This package is a middleware for [Hono](https://github.com/hono/hono), a Cloud Native IoT Connectivity platform. It provides a response cache mechanism using Cloudflare's KV (Key Value) storage.
+This package is a middleware for [Hono](https://hono.dev/), a Cloud Native IoT Connectivity platform. It provides a response cache mechanism using Cloudflare's KV (Key Value) storage.
 
 One of the key features of this middleware is that it can be used even when a custom domain is not available.
 
