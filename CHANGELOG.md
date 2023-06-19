@@ -1,5 +1,11 @@
 # @napolab/typescript
 
+## 0.0.6
+
+### Patch Changes
+
+- 33936f7: fix wrong url readme
+
 ## 0.0.5
 
 ### Patch Changes
