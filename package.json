@@ -87,7 +87,9 @@
   "files": [
     "README",
     "index.mjs",
+    "index.mjs.map",
     "index.cjs",
+    "index.cjs.map",
     "index.d.ts"
   ]
 }
