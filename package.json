@@ -1,6 +1,6 @@
 {
   "name": "@napolab/kv-response-cache",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": false,
   "main": "./index.cjs",
   "module": "./index.mjs",
