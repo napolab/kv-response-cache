@@ -83,5 +83,6 @@
   },
   "bugs": {
     "url": "https://github.com/napolab/kv-response-cache/issues"
-  }
+  },
+  "files": ["README", "index.mjs", "index.cjs", "index.d.ts"]
 }
