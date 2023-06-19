@@ -8,34 +8,36 @@ export interface KVCache {
   delete(key: string): Promise<void>;
 }
 
-export const initializeCache = (kv: KVNamespace) => (cacheName: string): KVCache => {
-  const cacheKey = buildCacheKey(cacheName);
+export const initializeCache =
+  (kv: KVNamespace) =>
+  (cacheName: string): KVCache => {
+    const cacheKey = buildCacheKey(cacheName);
 
-  return {
-    async match(key: string) {
-      const [headers, status, body] = await Promise.all([
-        kv.get(cacheKey(`${key}:headers`)),
-        kv.get(cacheKey(`${key}:status`)),
-        kv.get(cacheKey(`${key}:body`), "stream"),
-      ]);
+    return {
+      async match(key: string) {
+        const [headers, status, body] = await Promise.all([
+          kv.get(cacheKey(`${key}:headers`)),
+          kv.get(cacheKey(`${key}:status`)),
+          kv.get(cacheKey(`${key}:body`), "stream"),
+        ]);
 
-      if (headers === null || body === null || status === null) return null;
+        if (headers === null || body === null || status === null) return null;
 
-      return new Response(body, { headers: JSON.parse(headers), status: parseInt(status, 10) });
-    },
-    async put(key: string, res: Response, options?: KVNamespacePutOptions) {
-      const headers = Array.from(res.headers.entries()).reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-      const body = res.body;
-      if (body === null) return;
+        return new Response(body, { headers: JSON.parse(headers), status: parseInt(status, 10) });
+      },
+      async put(key: string, res: Response, options?: KVNamespacePutOptions) {
+        const headers = Array.from(res.headers.entries()).reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+        const body = res.body;
+        if (body === null) return;
 
-      await Promise.all([
-        kv.put(cacheKey(`${key}:headers`), JSON.stringify(headers), options),
-        kv.put(cacheKey(`${key}:status`), `${res.status}`, options),
-        kv.put(cacheKey(`${key}:body`), body, options),
-      ]);
-    },
-    async delete(key: string) {
-      await Promise.all([kv.delete(cacheKey(`${key}:headers`)), kv.delete(cacheKey(`${key}:body`))]);
-    },
+        await Promise.all([
+          kv.put(cacheKey(`${key}:headers`), JSON.stringify(headers), options),
+          kv.put(cacheKey(`${key}:status`), `${res.status}`, options),
+          kv.put(cacheKey(`${key}:body`), body, options),
+        ]);
+      },
+      async delete(key: string) {
+        await Promise.all([kv.delete(cacheKey(`${key}:headers`)), kv.delete(cacheKey(`${key}:body`))]);
+      },
+    };
   };
-};
