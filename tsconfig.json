@@ -2,12 +2,9 @@
   "extends": ["@tsconfig/recommended/tsconfig.json", "@tsconfig/node18/tsconfig.json", "@tsconfig/esm/tsconfig.json"],
   "compilerOptions": {
     "lib": ["esnext"],
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "@cloudflare/workers-types"],
     "outDir": "dist",
-    "baseUrl": ".",
-    "paths": {
-      "@adapters/*": ["src/adapters/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src", "types"],
   "exclude": ["node_modules", "dist"]
