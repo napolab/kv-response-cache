@@ -1,5 +1,11 @@
 # @napolab/typescript
 
+## 0.0.4
+
+### Patch Changes
+
+- 0a1d15f: add files field to package.json
+
 ## 0.0.3
 
 ### Patch Changes
