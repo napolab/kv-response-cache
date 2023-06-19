@@ -17,7 +17,7 @@ export const config = defineConfig({
     },
     {
       format: "cjs",
-      entryFileNames: "[name].js",
+      entryFileNames: "[name].cjs",
       dir: out,
       sourcemap: true,
     },
