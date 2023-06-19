@@ -1,5 +1,11 @@
 # @napolab/typescript
 
+## 0.0.3
+
+### Patch Changes
+
+- 2a06abb: add repository and bug to package.json
+
 ## 0.0.2
 
 ### Patch Changes
