@@ -4,7 +4,7 @@ import esbuild from "rollup-plugin-esbuild";
 import { externals } from "rollup-plugin-node-externals";
 import tsConfigPaths from "rollup-plugin-tsconfig-paths";
 
-const out = "dist";
+const out = ".";
 
 export const config = defineConfig({
   input: ["src/index.ts"],
@@ -17,7 +17,7 @@ export const config = defineConfig({
     },
     {
       format: "cjs",
-      entryFileNames: "[name].js",
+      entryFileNames: "[name].cjs",
       dir: out,
       sourcemap: true,
     },

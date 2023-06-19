@@ -6,3 +6,6 @@ dump
 node_modules
 coverage
 .ultra.cache.json
+
+
+index.*
