@@ -1,6 +1,6 @@
 {
   "name": "@napolab/kv-response-cache",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": false,
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -17,7 +17,7 @@
     "access": "public"
   },
   "scripts": {
-    "dev": "NODE_ENV=development DEBUG=1 rollup -c rollup.config.dev.mjs -w",
+    "dev": "NODE_ENV=development rollup -c rollup.config.dev.mjs -w",
     "prebuild": "rimraf dist",
     "build": "rollup -c",
     "start": "NODE_ENV=production node dist/index.mjs",
