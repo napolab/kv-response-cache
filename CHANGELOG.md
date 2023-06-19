@@ -1,5 +1,11 @@
 # @napolab/typescript
 
+## 0.0.5
+
+### Patch Changes
+
+- 4a0aa73: add map files
+
 ## 0.0.4
 
 ### Patch Changes
