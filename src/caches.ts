@@ -2,15 +2,15 @@ const buildCacheKey = (namespace: string) => (key: string) => {
   return `${namespace}:${key}`;
 };
 
-export interface KVCache {
+export interface KVResponseCache {
   match(key: string): Promise<Response | null>;
   put(key: string, res: Response, options?: KVNamespacePutOptions): Promise<void>;
   delete(key: string): Promise<void>;
 }
 
-export const initializeCache =
+export const kvResponseCache =
   (kv: KVNamespace) =>
-  (cacheName: string): KVCache => {
+  (cacheName: string): KVResponseCache => {
     const cacheKey = buildCacheKey(cacheName);
 
     return {
