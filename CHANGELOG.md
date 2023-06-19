@@ -1,5 +1,11 @@
 # @napolab/typescript
 
+## 0.0.2
+
+### Patch Changes
+
+- c7863c0: edit package.json
+
 ## 0.0.1
 
 ### Patch Changes
