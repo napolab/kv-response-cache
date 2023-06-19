@@ -76,5 +76,12 @@
     "cloudflare",
     "kv",
     "cloudflare kv"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/napolab/kv-response-cache.git"
+  },
+  "bugs": {
+    "url": "https://github.com/napolab/kv-response-cache/issues"
+  }
 }
