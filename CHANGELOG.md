@@ -1,5 +1,11 @@
 # @napolab/typescript
 
+## 0.0.7
+
+### Patch Changes
+
+- faf5e68: fix missing doc
+
 ## 0.0.6
 
 ### Patch Changes
