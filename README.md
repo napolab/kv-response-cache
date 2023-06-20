@@ -35,6 +35,20 @@ type KVCacheOption<E extends Env> = {
 declare const kvCaches = <E extends Env>({ namespace, key: bindingKey, options }: KVCacheOption<E>): MiddlewareHandler<E>
 ```
 
+### kvResponseCache
+
+kvResponseCache is a function similar to Cache from @cloudflare/workers-types. It provides an interface for storing responses in KV and is used internally by the kvCaches middleware.
+
+```typescript
+interface KVResponseCache {
+  match(key: string): Promise<Response | null>;
+  put(key: string, res: Response, options?: KVNamespacePutOptions): Promise<void>;
+  delete(key: string): Promise<void>;
+}
+
+declare const kvResponseCache = (kv: KVNamespace) => (cacheName: string): KVResponseCache
+```
+
 ## Installation
 
 Here are the steps to install this project. We'll assume you are using npm for this example:
@@ -52,17 +66,34 @@ To use this middleware in your Hono application, you need to import the kvCaches
 Here is a simple example of how to use kvCaches in a Hono application:
 
 ```typescript
-import { kvCaches } from "@napolab/kv-response-cache";
+import { kvCaches, kvResponseCache } from "@napolab/kv-response-cache";
 
 const cacheOptions = {
   key: "myKVNamespace",
-  namespace: "myNamespace",
+  namespace: "api-cache",
 };
 
 const middleware = kvCaches(cacheOptions);
 
 // Use the middleware in your application
 // app.use(middleware);
+
+// delete cache example
+app.on(["POST", "PUT", "DELETE"], "*", async (c) => {
+  const reqURL = new URL(c.req.url);
+  const url = new URL(`${c.env.API_URL}${reqURL.pathname}`);
+  url.search = reqURL.search;
+
+  const res = await fetch(url.href, c.req);
+  const caches = kvResponseCache(c.env.API_CACHE);
+
+  const cache = caches("api-cache");
+  const key = c.req.url;
+
+  c.executionCtx.waitUntil(cache.delete(key));
+
+  return res;
+});
 ```
 
 In this example, myKVNamespace is the key for the KV Namespace binding and myNamespace is the namespace for the cache. Adjust these values to match your Cloudflare KV settings.
