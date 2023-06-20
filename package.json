@@ -1,6 +1,6 @@
 {
   "name": "@napolab/kv-response-cache",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": false,
   "description": "Hono middleware for response caching using Cloudflare's KV storage",
   "main": "./index.cjs",
