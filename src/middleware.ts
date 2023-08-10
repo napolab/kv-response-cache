@@ -21,7 +21,11 @@ export const kvCaches =
 
     const key = new URL(c.req.url).pathname;
     const response = await cache.match(key);
-    if (response) return response;
+    if (response) {
+      response.headers.set("X-KV-CACHE", "hit");
+
+      return response;
+    }
 
     await next();
 
