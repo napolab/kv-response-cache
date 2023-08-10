@@ -1,5 +1,11 @@
 # @napolab/typescript
 
+## 0.1.0
+
+### Minor Changes
+
+- 26788c8: add x-kv-cache header
+
 ## 0.0.8
 
 ### Patch Changes
