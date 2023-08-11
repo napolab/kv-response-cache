@@ -37,7 +37,11 @@ export const kvResponseCache =
         ]);
       },
       async delete(key: string) {
-        await Promise.all([kv.delete(cacheKey(`${key}:headers`)), kv.delete(cacheKey(`${key}:body`))]);
+        await Promise.all([
+          kv.delete(cacheKey(`${key}:headers`)),
+          kv.delete(cacheKey(`${key}:status`)),
+          kv.delete(cacheKey(`${key}:body`)),
+        ]);
       },
     };
   };
