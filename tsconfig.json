@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "ES2018",
     "lib": ["esnext"],
-    "types": ["vitest/globals", "@cloudflare/workers-types"],
+    "types": ["vitest/globals", "@cloudflare/workers-types", "vitest-environment-miniflare/globals"],
     "outDir": "dist",
     "baseUrl": "."
   },

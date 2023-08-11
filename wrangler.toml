@@ -1,0 +1,3 @@
+name = "kv-response-cache"
+compatibility_date = "2023-08-07"
+node_compat = true
