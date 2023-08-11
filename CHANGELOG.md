@@ -1,5 +1,11 @@
 # @napolab/typescript
 
+## 0.1.1
+
+### Patch Changes
+
+- 4342a37: Add tests for kvCaches middleware behavior
+
 ## 0.1.0
 
 ### Minor Changes
