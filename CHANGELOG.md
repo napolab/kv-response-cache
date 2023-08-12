@@ -1,4 +1,4 @@
-# @napolab/typescript
+# @napolab/kv-response-cache
 
 ## 0.1.1
 
