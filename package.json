@@ -30,7 +30,7 @@
     "fmt:prettier": "prettier --write .",
     "type-check": "tsc --noEmit",
     "test": "NODE_OPTIONS=--experimental-vm-modules vitest",
-    "publish": "changeset publish"
+    "release": "changeset publish"
   },
   "author": "@naporin0624",
   "license": "MIT",

@@ -15,13 +15,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Setup Node.js 18.16.0
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: "package.json"
-
-      - name: Install Dependencies
-        run: npm ci
+      - uses: ./.github/workflows/modules/setup-node
 
       - name: Build
         run: npm run build
@@ -30,7 +24,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: npm run publish
+          publish: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
