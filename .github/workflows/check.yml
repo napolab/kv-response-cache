@@ -1,0 +1,44 @@
+name: check
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-test
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/modules/setup-node
+      - run: npm run test
+  lint:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-lint
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/modules/setup-node
+      - run: npm run lint
+  build:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-build
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/modules/setup-node
+      - run: |
+          npm run build
+          npx publint
+  type-check:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-type-check
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/modules/setup-node
+      - run: npm run type-check
