@@ -1,5 +1,11 @@
 # @napolab/kv-response-cache
 
+## 0.2.0
+
+### Minor Changes
+
+- a8e5425: use tsup
+
 ## 0.1.2
 
 ### Patch Changes
