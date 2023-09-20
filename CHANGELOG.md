@@ -1,5 +1,11 @@
 # @napolab/kv-response-cache
 
+## 0.1.2
+
+### Patch Changes
+
+- 053fad4: Changed cache middleware to cache only when status code is 2xx
+
 ## 0.1.1
 
 ### Patch Changes
