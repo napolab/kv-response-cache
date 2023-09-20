@@ -29,5 +29,7 @@ export const kvCaches =
 
     await next();
 
-    c.executionCtx.waitUntil(cache.put(key, c.res.clone(), options));
+    if (c.res.status >= 200 && c.res.status < 300) {
+      c.executionCtx.waitUntil(cache.put(key, c.res.clone(), options));
+    }
   };
