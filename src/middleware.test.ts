@@ -1,6 +1,8 @@
-import { Hono, type MiddlewareHandler } from "hono";
+import { Hono } from "hono";
 
 import { kvCaches } from "./middleware";
+
+import type { MiddlewareHandler, Context } from "hono";
 const describe = setupMiniflareIsolatedStorage();
 
 type Bindings = {
@@ -75,5 +77,23 @@ describe("kvCaches", () => {
 
     const cachedRes = await env.KV.get("test:" + new URL(req1.url).pathname + ":body", "text");
     expect(cachedRes).toBeNull(); // Response should not be cached
+  });
+
+  it("handles namespace as a function correctly", async () => {
+    let context!: Context;
+    const dynamicNamespace = vi.fn(() => "test");
+    const kvCacheDynamicNamespace = kvCaches<HonoEnv>({ namespace: dynamicNamespace, key: "KV" });
+
+    app.get("/dynamic", kvCacheDynamicNamespace, async (c) => {
+      context = c;
+
+      return c.body(null);
+    });
+
+    const req = new Request("http://localhost/dynamic");
+    await app.fetch(req, env, ctx);
+    await getMiniflareWaitUntil(ctx);
+
+    expect(dynamicNamespace).toHaveBeenCalledWith(context);
   });
 });

@@ -17,9 +17,6 @@ jobs:
 
       - uses: ./.github/workflows/modules/setup-node
 
-      - name: Build
-        run: npm run build
-
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
