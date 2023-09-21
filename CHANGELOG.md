@@ -1,5 +1,11 @@
 # @napolab/kv-response-cache
 
+## 0.2.1
+
+### Patch Changes
+
+- 6722707: add new test case
+
 ## 0.2.0
 
 ### Minor Changes
