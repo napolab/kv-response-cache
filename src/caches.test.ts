@@ -39,6 +39,21 @@ describe("kvResponseCache", () => {
     expect(res?.headers.get("Content-Type")).toEqual("text/plain");
   });
 
+  it("should return null for a non-matching cache", async () => {
+    (mockKV.get as Mock).mockReturnValueOnce(null).mockReturnValueOnce("200").mockReturnValueOnce(new ReadableStream());
+
+    cache = kvResponseCache(mockKV)("testCache");
+    await expect(cache.match("testKey")).resolves.toBeNull();
+
+    (mockKV.get as Mock).mockReturnValueOnce({}).mockReturnValueOnce(null).mockReturnValueOnce(new ReadableStream());
+    cache = kvResponseCache(mockKV)("testCache");
+    await expect(cache.match("testKey")).resolves.toBeNull();
+
+    (mockKV.get as Mock).mockReturnValueOnce({}).mockReturnValueOnce("200").mockReturnValueOnce(null);
+    cache = kvResponseCache(mockKV)("testCache");
+    await expect(cache.match("testKey")).resolves.toBeNull();
+  });
+
   it("should correctly put a response into cache", async () => {
     const testKey = "sampleKey";
     const res = new Response("Hello, World!", { status: 200, headers: { "Content-Type": "text/plain" } });
@@ -46,14 +61,6 @@ describe("kvResponseCache", () => {
     await cache.put(testKey, res);
 
     expect(mockKV.put).toHaveBeenCalledTimes(3);
-  });
-
-  it("should correctly delete a cached response", async () => {
-    const testKey = "sampleKey";
-
-    await cache.delete(testKey);
-
-    expect(mockKV.delete).toHaveBeenCalledTimes(3);
   });
 
   it("should correctly put and match a response into/from cache", async () => {
@@ -86,6 +93,18 @@ describe("kvResponseCache", () => {
     const cachedBody = await cachedRes?.text();
     expect(cachedBody).toEqual(bodyContent);
   });
+
+  it("should not cache a response with a null body", async () => {
+    const res = new Response(null);
+    cache = kvResponseCache(mockKV)("testCache");
+    const testKey = "sampleKey";
+    await cache.put(testKey, res);
+
+    expect(mockKV.put).toBeCalledTimes(0);
+    expect(mockKV.put).toBeCalledTimes(0);
+    expect(mockKV.put).toBeCalledTimes(0);
+  });
+
   it("should correctly delete a cached response", async () => {
     cache = kvResponseCache(mockKV)("testCache");
     const testKey = "sampleKey";
@@ -95,5 +114,13 @@ describe("kvResponseCache", () => {
     expect(mockKV.delete).toHaveBeenCalledWith("testCache:sampleKey:headers");
     expect(mockKV.delete).toHaveBeenCalledWith("testCache:sampleKey:status");
     expect(mockKV.delete).toHaveBeenCalledWith("testCache:sampleKey:body");
+  });
+
+  it("should correctly delete a cached response", async () => {
+    const testKey = "sampleKey";
+
+    await cache.delete(testKey);
+
+    expect(mockKV.delete).toHaveBeenCalledTimes(3);
   });
 });
