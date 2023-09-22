@@ -1,8 +1,7 @@
 import { kvResponseCache } from "./caches";
-import { kvCaches } from "./middleware";
+import { kvCaches, defaultGetCacheKey } from "./middleware";
 
 import type { KVResponseCache } from "./caches";
 
 export type { KVResponseCache };
-export { kvResponseCache };
-export { kvCaches };
+export { kvResponseCache, kvCaches, defaultGetCacheKey as getCacheKey };
