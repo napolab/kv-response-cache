@@ -4,14 +4,26 @@ import type { Filter } from "./types";
 import type { Context, Env, MiddlewareHandler } from "hono";
 
 type Namespace<E extends Env> = string | ((c: Context<E>) => string);
+interface GetCacheKey<E extends Env> {
+  (c: Context<E>): string;
+}
+
 type KVCacheOption<E extends Env> = {
   key: keyof Filter<Exclude<E["Bindings"], undefined>, KVNamespace>;
   namespace: Namespace<E>;
+  getCacheKey?: GetCacheKey<E>;
   options?: KVNamespacePutOptions;
 };
 
+export const defaultGetCacheKey = <E extends Env>(c: Context<E>) => c.req.url;
+
 export const kvCaches =
-  <E extends Env>({ namespace, key: bindingKey, options }: KVCacheOption<E>): MiddlewareHandler<E> =>
+  <E extends Env>({
+    key: bindingKey,
+    namespace,
+    options,
+    getCacheKey = defaultGetCacheKey,
+  }: KVCacheOption<E>): MiddlewareHandler<E> =>
   async (c, next) => {
     const kv: KVNamespace = c.env?.[bindingKey as string] as KVNamespace;
     const kvNamespace = typeof namespace === "function" ? namespace(c) : namespace;
@@ -19,7 +31,7 @@ export const kvCaches =
     const kvCaches = kvResponseCache(kv);
     const cache = kvCaches(kvNamespace);
 
-    const key = new URL(c.req.url).pathname;
+    const key = getCacheKey(c);
     const response = await cache.match(key);
     if (response) {
       response.headers.set("X-KV-CACHE", "hit");

@@ -41,13 +41,13 @@ describe("kvCaches", () => {
     const req1 = new Request("http://localhost/");
     const res1 = await app.fetch(req1, env, ctx);
     expect(res1.status).toEqual(200);
-    expect(res1.headers.get("X-KV-CACHE")).toBeNull(); // First request should not be cached
+    expect(res1.headers.get("X-KV-CACHE")).toBeNull();
     await getMiniflareWaitUntil(ctx);
 
     const req2 = new Request("http://localhost/");
     const res2 = await app.fetch(req2, env, ctx);
     expect(res2.status).toEqual(200);
-    expect(res2.headers.get("X-KV-CACHE")).toEqual("hit"); // Second request should be cached
+    expect(res2.headers.get("X-KV-CACHE")).toEqual("hit");
   });
 
   it("saves the response to cache after processing", async () => {
@@ -55,7 +55,7 @@ describe("kvCaches", () => {
     await app.fetch(req, env, ctx);
     await getMiniflareWaitUntil(ctx);
 
-    const cachedRes = await env.KV.get("test:" + new URL(req.url).pathname + ":body", "text");
+    const cachedRes = await env.KV.get(`test:${req.url}:body`, "text");
     expect(cachedRes).toEqual("Hello, World!");
   });
 
@@ -67,16 +67,16 @@ describe("kvCaches", () => {
     const req1 = new Request("http://localhost/error");
     const res1 = await app.fetch(req1, env, ctx);
     expect(res1.status).toEqual(500);
-    expect(res1.headers.get("X-KV-CACHE")).toBeNull(); // First request should not be cached
+    expect(res1.headers.get("X-KV-CACHE")).toBeNull();
     await getMiniflareWaitUntil(ctx);
 
     const req2 = new Request("http://localhost/error");
     const res2 = await app.fetch(req2, env, ctx);
     expect(res2.status).toEqual(500);
-    expect(res2.headers.get("X-KV-CACHE")).toBeNull(); // Second request should not be cached as well
+    expect(res2.headers.get("X-KV-CACHE")).toBeNull();
 
-    const cachedRes = await env.KV.get("test:" + new URL(req1.url).pathname + ":body", "text");
-    expect(cachedRes).toBeNull(); // Response should not be cached
+    const cachedRes = await env.KV.get(`test:${req1.url}:body`, "text");
+    expect(cachedRes).toBeNull();
   });
 
   it("handles namespace as a function correctly", async () => {
