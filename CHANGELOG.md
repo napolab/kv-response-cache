@@ -1,5 +1,11 @@
 # @napolab/kv-response-cache
 
+## 0.2.2
+
+### Patch Changes
+
+- 534c15f: fix cache url key
+
 ## 0.2.1
 
 ### Patch Changes
